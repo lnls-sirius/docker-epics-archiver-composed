@@ -1,0 +1,14 @@
+[Unit]
+Description=LNLS EPICS Archiver Appliances Docker Service
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker-compose -f /usr/local/etc/archiver-appliances-composed/docker-compose.yml up -d
+ExecStop=/usr/bin/docker-compose -f /usr/local/etc/archiver-appliances-composed/docker-compose.yml down
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
