@@ -1,6 +1,6 @@
-# Docker BEAST Alarm Server Composed
+# Docker EPICS Archiver Appliances Composed
 
-Docker compose files for alarm server containers.
+Docker compose files for epics archiver appliances containers.
 
 ### Executing `docker-compose.yml`
 
