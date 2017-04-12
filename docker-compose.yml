@@ -4,82 +4,88 @@ services:
         container_name: epics-archiver-mgmt
         image: gciotto/epics-archiver-mgmt
         networks:
-            - epics-archiver-network 
+            epics-archiver-network:
+                ipv4_address: 10.128.1.2
         dns:
             - 10.0.0.71
             - 10.0.0.72
-		ports:
-			- 11995:11995
+        ports:
+            - 11995:11995
         depends_on:
             - epics-archiver-mysql-db
             - epics-archiver-etl
-			- epics-archiver-engine
-			- epics-archiver-retrieval
-		volumes:
-			- epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
-			- epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
-			- epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+            - epics-archiver-engine
+            - epics-archiver-retrieval
+        volumes:
+            - epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
+            - epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
+            - epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
 
     epics-archiver-engine:
         container_name: epics-archiver-engine
         image: gciotto/epics-archiver-engine
         networks:
-            - epics-archiver-network 
+            epics-archiver-network:
+                ipv4_address: 10.128.1.3
         dns:
             - 10.0.0.71
             - 10.0.0.72
-		ports:
-			- 11996:11996
+        ports:
+            - 11996:11996
         depends_on:
             - epics-archiver-mysql-db
-		volumes:
-			- epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
-			- epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
-			- epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+        volumes:
+            - epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
+            - epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
+            - epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
 
     epics-archiver-etl:
         container_name: epics-archiver-etl
         image: gciotto/epics-archiver-etl
         networks:
-            - epics-archiver-network 
+            epics-archiver-network:
+                ipv4_address: 10.128.1.4
         dns:
             - 10.0.0.71
             - 10.0.0.72
-		ports:
-			- 11997:11997
+        ports:
+            - 11997:11997
         depends_on:
             - epics-archiver-mysql-db
-		volumes:
-			- epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
-			- epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
-			- epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+        volumes:
+            - epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
+            - epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
+            - epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
 
     epics-archiver-retrieval:
         container_name: epics-archiver-retrieval
         image: gciotto/epics-archiver-retrieval
         networks:
-            - epics-archiver-network 
+            epics-archiver-network:
+                ipv4_address: 10.128.1.5
         dns:
             - 10.0.0.71
             - 10.0.0.72
-		ports:
-			- 11998:11998
+        ports:
+            - 11998:11998
         depends_on:
             - epics-archiver-mysql-db
-		volumes:
-			- epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
-			- epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
-			- epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+        volumes:
+            - epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
+            - epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
+            - epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
 
     epics-archiver-mysql-db:
         container_name: epics-archiver-mysql-db
         image: gciotto/epics-archiver-mysql-db
         environment:
+            - MYSQL_ROOT_PASSWORD=controle
             - MYSQL_USER=lnls_user
             - MYSQL_PASSWORD=controle
             - MYSQL_DATABASE=lnls_archiver_db
         networks:
-            - epics-archiver-network 
+            epics-archiver-network:
+                ipv4_address: 10.128.1.6
         dns:
             - 10.0.0.71
             - 10.0.0.72
@@ -88,11 +94,12 @@ services:
 
 volumes:        
     epics-archiver-mysql-volume:
-	epics-archiver-sts:
-	epics-archiver-mts:
-	epics-archiver-lts:
+    epics-archiver-sts:
+    epics-archiver-mts:
+    epics-archiver-lts:
 
 networks:
     epics-archiver-network:
-        
-    
+        ipam:
+            config:
+                - subnet: 10.128.1.0/24
