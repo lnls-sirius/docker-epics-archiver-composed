@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: epics-archiver-appliance-service
+spec:
+  ports:
+  - name: epics-archiver-mgmt-port
+    port: 11995
+    targetPort: 11995
+
+  - name: epics-archiver-engine-port
+    port: 11996
+    targetPort: 11996
+
+  - name: epics-archiver-etl-port
+    port: 11997
+    targetPort: 11997
+
+  - name: epics-archiver-retrieval-port
+    port: 11998
+    targetPort: 11998
+
+  selector:
+    app : epics-archiver-appliance

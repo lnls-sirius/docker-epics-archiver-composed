@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: epics-archiver-deployment
+
+spec:
+  replicas: 1
+
+  strategy:
+    type: Recreate
+
+  template:
+    metadata:
+      labels:
+        app: epics-archiver-appliance
+
+    spec:
+      volumes:
+      - name: epics-archiver-sts
+        hostPath:
+          path: /root/epics-archiver-storage/epics-archiver-sts
+      - name: epics-archiver-mts
+        hostPath:
+          path: /root/epics-archiver-storage/epics-archiver-mts
+      - name: epics-archiver-lts
+        hostPath:
+          path: /root/epics-archiver-storage/epics-archiver-lts
+      - name: epics-archiver-mysql-volume
+        hostPath:
+          path: /root/epics-archiver-storage/epics-archiver-mysql-db
+
+      containers:
+      - name: epics-archiver-mgmt
+        image: gciotto/epics-archiver-mgmt
+        ports:
+        - containerPort : 11995
+
+      - name: epics-archiver-engine
+        image: gciotto/epics-archiver-engine
+        ports:
+        - containerPort : 11996
+        volumeMounts:
+        - mountPath: /opt/epics-archiver-appliances/storage/sts
+          name: epics-archiver-sts
+        - mountPath: /opt/epics-archiver-appliances/storage/mts
+          name: epics-archiver-mts
+        - mountPath: /opt/epics-archiver-appliances/storage/lts
+          name: epics-archiver-lts
+
+      - name: epics-archiver-etl
+        image: gciotto/epics-archiver-etl
+        ports:
+        - containerPort : 11997
+        volumeMounts:
+        - mountPath: /opt/epics-archiver-appliances/storage/sts
+          name: epics-archiver-sts
+        - mountPath: /opt/epics-archiver-appliances/storage/mts
+          name: epics-archiver-mts
+        - mountPath: /opt/epics-archiver-appliances/storage/lts
+          name: epics-archiver-lts
+
+      - name: epics-archiver-retrieval
+        image: gciotto/epics-archiver-retrieval
+        ports:
+        - containerPort : 11998
+
+      - name: epics-archiver-mysql-db
+        image: gciotto/epics-archiver-mysql-db
+        ports:
+        - containerPort : 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: epics-archiver-mysql-volume
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: controle
+        - name: MYSQL_USER
+          value: lnls_user
+        - name: MYSQL_PASSWORD
+          value: controle
+        - name: MYSQL_DATABASE
+          value: lnls_archiver_db
