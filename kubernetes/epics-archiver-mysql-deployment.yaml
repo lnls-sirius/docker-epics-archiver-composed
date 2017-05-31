@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: epics-archiver-mysql-db-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: epics-archiver-mysql-db
+    spec:
+      containers:
+      - name: epics-archiver-retrieval
+        image: gciotto/epics-archiver-mysql-db
+        ports:
+        - containerPort : 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: controle
+        - name: MYSQL_USER
+          value: lnls_user
+        - name: MYSQL_PASSWORD
+          value: controle
+        - name: MYSQL_DATABASE
+          value: lnls_archiver_db
+
+      restartPolicy: Always
+      volumeMounts:
+      - mountPath: /var/lib/mysql
+        name: epics-archiver-mysql-db
+      volumes:
+      - name: epics-archiver-mysql-db
+        hostPath:
+          path: /root/epics-archiver-appliance-storage/epics-archiver-mysql-db
+

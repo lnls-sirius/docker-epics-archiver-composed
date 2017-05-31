@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: epics-archiver-engine-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: epics-archiver-engine
+    spec:
+      containers:
+      - name: epics-archiver-engine
+        image: gciotto/epics-archiver-engine
+        ports:
+        - containerPort : 11996
+      restartPolicy: Always
+      volumeMounts:
+      - mountPath: /opt/epics-archiver-appliances/storage/sts
+        name: epics-archiver-sts
+      - mountPath: /opt/epics-archiver-appliances/storage/mts
+        name: epics-archiver-mts
+      - mountPath: /opt/epics-archiver-appliances/storage/lts
+        name: epics-archiver-lts
+      volumes:
+      - name: epics-archiver-sts
+        hostPath:
+          path: /root/epics-archiver-appliance-storage/epics-archiver-appliance-sts
+      - name: epics-archiver-mts
+        hostPath:
+          path: /root/epics-archiver-appliance-storage/epics-archiver-appliance-mts
+      - name: epics-archiver-lts
+        hostPath:
+          path: /root/epics-archiver-appliance-storage/epics-archiver-appliance-lts
+

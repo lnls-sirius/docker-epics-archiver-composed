@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: epics-archiver-mgmt-service
+spec:
+  clusterIP: 10.128.1.2
+  ports:
+  - name: epics-archiver-mgmt-port
+    port: 11995
+    targetPort: 11995
+  selector:
+    app : epics-archiver-mgmt
