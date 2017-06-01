@@ -11,3 +11,22 @@ spec:
     image: gciotto/epics-archiver-retrieval
     ports:
     - containerPort : 11998
+    volumeMounts:
+    - mountPath: /opt/epics-archiver-appliances/storage/sts
+      name: epics-archiver-sts
+    - mountPath: /opt/epics-archiver-appliances/storage/mts
+      name: epics-archiver-mts
+    - mountPath: /opt/epics-archiver-appliances/storage/lts
+      name: epics-archiver-lts
+
+  volumes:
+  - name: epics-archiver-sts
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-appliance-sts
+  - name: epics-archiver-mts
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-appliance-mts
+  - name: epics-archiver-lts
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-appliance-lts
+
