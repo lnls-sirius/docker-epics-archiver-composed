@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: epics-archiver-mgmt-pod 
+  labels:
+    app: epics-archiver-mgmt
+spec:
+  containers:
+  - name: epics-archiver-mgmt
+    image: gciotto/epics-archiver-mgmt
+    ports:
+    - containerPort : 11995

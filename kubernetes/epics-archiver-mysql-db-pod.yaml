@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: epics-archiver-mysql-db-pod
+  labels:
+    app: epics-archiver-mysql-db
+spec:
+  containers:
+  - name: epics-archiver-mysql-db
+    image: gciotto/epics-archiver-mysql-db
+    ports:
+    - containerPort : 3306
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: controle
+    - name: MYSQL_USER
+      value: lnls_user
+    - name: MYSQL_PASSWORD
+      value: controle
+    - name: MYSQL_DATABASE
+      value: lnls_archiver_db
+    volumeMounts:
+    - mountPath: /var/lib/mysql/
+      name: epics-archiver-mysql-db
+
+  volumes:
+  - name: epics-archiver-mysql-db
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-mysql-db
+

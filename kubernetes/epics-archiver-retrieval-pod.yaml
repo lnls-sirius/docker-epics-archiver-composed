@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: epics-archiver-retrieval-pod 
+  labels:
+    app: epics-archiver-retrieval
+
+spec:
+  containers:
+  - name: epics-archiver-retrieval
+    image: gciotto/epics-archiver-retrieval
+    ports:
+    - containerPort : 11998

@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: epics-archiver-engine-pod 
+  labels:
+    app: epics-archiver-engine
+spec:
+
+  containers:
+  - name: epics-archiver-engine
+    image: gciotto/epics-archiver-engine
+    ports:
+    - containerPort : 11996
+    volumeMounts:
+    - mountPath: /opt/epics-archiver-appliances/storage/sts
+      name: epics-archiver-sts
+    - mountPath: /opt/epics-archiver-appliances/storage/mts
+      name: epics-archiver-mts
+    - mountPath: /opt/epics-archiver-appliances/storage/lts
+      name: epics-archiver-lts
+
+  volumes:
+  - name: epics-archiver-sts
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-appliance-sts
+  - name: epics-archiver-mts
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-appliance-mts
+  - name: epics-archiver-lts
+    hostPath:
+      path: /var/roothome/epics-archiver-appliance-storage/epics-archiver-appliance-lts
+
