@@ -8,5 +8,7 @@ spec:
   - name: epics-archiver-retrieval-port
     port: 11998
     targetPort: 11998
+    nodePort: 31998
+  type: NodePort
   selector:
     app : epics-archiver-retrieval

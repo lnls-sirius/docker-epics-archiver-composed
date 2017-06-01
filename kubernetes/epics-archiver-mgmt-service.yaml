@@ -8,5 +8,11 @@ spec:
   - name: epics-archiver-mgmt-port
     port: 11995
     targetPort: 11995
+    nodePort: 31995
+  - name: epics-archiver-mgmt-cluster-port
+    port: 12000
+    targetPort: 12000
+    nodePort: 32000
+  type: NodePort
   selector:
     app : epics-archiver-mgmt
