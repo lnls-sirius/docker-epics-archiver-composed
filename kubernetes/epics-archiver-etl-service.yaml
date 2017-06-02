@@ -8,7 +8,5 @@ spec:
   - name: epics-archiver-etl-port
     port: 11997
     targetPort: 11997
-    nodePort: 31997
-  type: NodePort
   selector:
     app : epics-archiver-etl

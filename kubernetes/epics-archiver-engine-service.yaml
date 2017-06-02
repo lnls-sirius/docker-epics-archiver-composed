@@ -8,7 +8,5 @@ spec:
   - name: epics-archiver-engine-port
     port: 11996
     targetPort: 11996
-    nodePort: 31996
-  type: NodePort
   selector:
     app : epics-archiver-engine
