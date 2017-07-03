@@ -1,20 +1,11 @@
-# This Makefile is based on the version available at lnls-sirius/docker-ccdb-composed 
+# This Makefile is based on the version available at lnls-sirius/docker-ccdb-composed
 # repository and written by @lerwys
 
 PREFIX ?= /usr/local
 
-CMDSEP = ;
-
-PWD =		$(shell pwd)
-MKDIR =     mkdir
-RMDIR =     rmdir
-CP =        cp
-INSTALL =   install
-RM =        rm
-
 # Docker files
 SRC_DOCKER_COMPOSE_FILE = docker-compose.yml
-SERVICE_NAME = archiver-appliances-composed
+SERVICE_NAME = lnls-epics-archiver
 DOCKER_FILES_DEST = ${PREFIX}/etc/${SERVICE_NAME}
 
 # Service files
@@ -28,15 +19,16 @@ SYSTEMCTL := systemctl
 all:
 
 install:
-	${MKDIR} -p ${DOCKER_FILES_DEST}
-	${CP} --preserve=mode ${SRC_DOCKER_COMPOSE_FILE} ${DOCKER_FILES_DEST}
-	${CP} --preserve=mode ${SRC_SERVICE_FILE} ${SERVICE_FILE_DEST}
-	${SYSTEMCTL} daemon-reload
-	-${SYSTEMCTL} start ${SERVICE_NAME}
+	mkdir -p ${DOCKER_FILES_DEST}
+	cp --preserve=mode ${SRC_DOCKER_COMPOSE_FILE} ${DOCKER_FILES_DEST}
+	cp --preserve=mode ${SRC_SERVICE_FILE} ${SERVICE_FILE_DEST}
+	systemctl daemon-reload
+	systemctl start ${SERVICE_NAME}
 
 uninstall:
-	${SYSTEMCTL} stop ${SERVICE_NAME}
-	${RM} -f ${SERVICE_FILE_DEST}/${SRC_SERVICE_FILE}
-	${RM} -R ${DOCKER_FILES_DEST}
+	systemctl stop ${SERVICE_NAME}
+	rm -f ${SERVICE_FILE_DEST}/${SRC_SERVICE_FILE}
+	rm -R ${DOCKER_FILES_DEST}
+	systemctl daemon-reload
 
 
