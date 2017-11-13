@@ -2,10 +2,10 @@ version: '2'
 services:
     epics-archiver-mgmt:
         container_name: epics-archiver-mgmt
-        image: gciotto/epics-archiver-mgmt
+        image: lnlscon/epics-archiver-mgmt:latest
         networks:
             epics-archiver-network:
-                ipv4_address: 192.168.5.2
+                ipv4_address: 192.168.5.5
         dns:
             - 10.0.0.71
             - 10.0.0.72
@@ -20,15 +20,16 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+            - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
             - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
 
     epics-archiver-engine:
         container_name: epics-archiver-engine
-        image: gciotto/epics-archiver-engine
+        image: lnlscon/epics-archiver-engine:latest
         networks:
             epics-archiver-network:
-                ipv4_address: 192.168.5.3
+                ipv4_address: 192.168.5.7
         dns:
             - 10.0.0.71
             - 10.0.0.72
@@ -40,15 +41,16 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+       	    - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
             - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
 
     epics-archiver-etl:
         container_name: epics-archiver-etl
-        image: gciotto/epics-archiver-etl
+        image: lnlscon/epics-archiver-etl:latest
         networks:
             epics-archiver-network:
-                ipv4_address: 192.168.5.4
+                ipv4_address: 192.168.5.9
         dns:
             - 10.0.0.71
             - 10.0.0.72
@@ -60,15 +62,16 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+       	    - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
             - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
 
     epics-archiver-retrieval:
         container_name: epics-archiver-retrieval
-        image: gciotto/epics-archiver-retrieval
+        image: lnlscon/epics-archiver-retrieval:latest
         networks:
             epics-archiver-network:
-                ipv4_address: 192.168.5.5
+                ipv4_address: 192.168.5.11
         dns:
             - 10.0.0.71
             - 10.0.0.72
@@ -80,12 +83,13 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+       	    - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
             - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
 
     epics-archiver-mysql-db:
         container_name: epics-archiver-mysql-db
-        image: gciotto/epics-archiver-mysql-db
+        image: lnlscon/epics-archiver-mysql-db:latest
         environment:
             - MYSQL_ROOT_PASSWORD=controle
             - MYSQL_USER=lnls_user
@@ -93,7 +97,7 @@ services:
             - MYSQL_DATABASE=lnls_archiver_db
         networks:
             epics-archiver-network:
-                ipv4_address: 192.168.5.6
+                ipv4_address: 192.168.5.3
         dns:
             - 10.0.0.71
             - 10.0.0.72
