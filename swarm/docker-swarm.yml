@@ -1,0 +1,106 @@
+version: '3.2'
+services:
+    epics-archiver-mgmt:
+        hostname: epics-archiver-mgmt
+        image: lnlscon/epics-archiver-mgmt:swarm
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        ports:
+            - 11995:11995
+        depends_on:
+            - epics-archiver-mysql-db
+            - epics-archiver-etl
+            - epics-archiver-engine
+            - epics-archiver-retrieval
+        volumes:
+            - /storage/epics-archiver/storage/sts:/opt/epics-archiver-appliances/storage/sts
+            - /storage/epics-archiver/storage/mts:/opt/epics-archiver-appliances/storage/mts
+            - /storage/epics-archiver/storage/lts:/opt/epics-archiver-appliances/storage/lts
+            - /storage/epics-archiver/configuration:/opt/epics-archiver-appliances/configuration
+        env_file:
+            - /home/srv1/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
+
+    epics-archiver-engine:
+        hostname: epics-archiver-engine
+        image: lnlscon/epics-archiver-engine:swarm
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        ports:
+            - 11996:11996
+        depends_on:
+            - epics-archiver-mysql-db
+        volumes:
+            - /storage/epics-archiver/storage/sts:/opt/epics-archiver-appliances/storage/sts
+            - /storage/epics-archiver/storage/mts:/opt/epics-archiver-appliances/storage/mts
+            - /storage/epics-archiver/storage/lts:/opt/epics-archiver-appliances/storage/lts
+            - /storage/epics-archiver/configuration:/opt/epics-archiver-appliances/configuration
+        env_file:
+            - /home/srv1/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
+
+    epics-archiver-etl:
+        hostname: epics-archiver-etl
+        image: lnlscon/epics-archiver-etl:swarm
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        ports:
+            - 11997:11997
+        depends_on:
+            - epics-archiver-mysql-db
+        volumes:
+            - /storage/epics-archiver/storage/sts:/opt/epics-archiver-appliances/storage/sts
+            - /storage/epics-archiver/storage/mts:/opt/epics-archiver-appliances/storage/mts
+            - /storage/epics-archiver/storage/lts:/opt/epics-archiver-appliances/storage/lts
+            - /storage/epics-archiver/configuration:/opt/epics-archiver-appliances/configuration
+        env_file:
+            - /home/srv1/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
+
+    epics-archiver-retrieval:
+        hostname: epics-archiver-retrieval
+        image: lnlscon/epics-archiver-retrieval:swarm
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        ports:
+            - 11998:11998
+        depends_on:
+            - epics-archiver-mysql-db
+        volumes:
+            - /storage/epics-archiver/storage/sts:/opt/epics-archiver-appliances/storage/sts
+            - /storage/epics-archiver/storage/mts:/opt/epics-archiver-appliances/storage/mts
+            - /storage/epics-archiver/storage/lts:/opt/epics-archiver-appliances/storage/lts
+            - /storage/epics-archiver/configuration:/opt/epics-archiver-appliances/configuration
+        env_file:
+            - /home/srv1/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
+
+    epics-archiver-mysql-db:
+        hostname: epics-archiver-mysql-db
+        image: lnlscon/epics-archiver-mysql-db
+        environment:
+            - MYSQL_ROOT_PASSWORD=controle
+            - MYSQL_USER=lnls_user
+            - MYSQL_PASSWORD=controle
+            - MYSQL_DATABASE=lnls_archiver_db
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        volumes:
+            - /storage/epics-archiver/db:/var/lib/mysql
+
+networks:
+    epics-archiver-network:
+        ipam:
+            config:
+                - subnet: 192.168.5.0/24
