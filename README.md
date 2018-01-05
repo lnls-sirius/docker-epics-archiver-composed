@@ -4,6 +4,15 @@ Docker compose files for epics archiver appliances containers.
 
 ## Deployment with Docker Compose
 
+### Environment file
+
+Define the environment variables in `lnls-epics-archiver.env` to set any EPICS preferences up. `CERTIFICATE_PASSWORD`, `CONNECTION_NAME` and `CONNECTION_PASSWORD` need to be changed to reflect the 
+certificate password and LDAP binding address and password, respectively. Edit `docker-compose.yml` with its right location.
+
+### Persistent data folders
+
+Edit `docker-compose.yml` replacing all persistent data locations in all `volume` sections.
+
 ### Changing subnet IPv4 addresses
 
 Change each container's IP address, as decribed in `https://docs.docker.com/compose/compose-file/#ipam` and `https://github.com/docker/compose/issues/2582`.
