@@ -22,7 +22,7 @@ services:
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
             - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
-            - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
+            - /home/gciotto/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
 
     epics-archiver-engine:
         container_name: epics-archiver-engine
@@ -41,9 +41,9 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
-       	    - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
+            - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
-            - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
+            - /home/gciotto/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
 
     epics-archiver-etl:
         container_name: epics-archiver-etl
@@ -62,9 +62,9 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
-       	    - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
+            - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
-            - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
+            - /home/gciotto/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
 
     epics-archiver-retrieval:
         container_name: epics-archiver-retrieval
@@ -83,9 +83,9 @@ services:
             - /home/opr24/docker-storage/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
             - /home/opr24/docker-storage/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
             - /home/opr24/docker-storage/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
-       	    - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
+            - /home/opr24/docker-storage/configuration:/opt/epics-archiver-appliances/configuration
         env_file:
-            - /etc/systemd/system/lnls-epics-archiver.service.d/lnls-epics-archiver.env
+            - /home/gciotto/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
 
     epics-archiver-mysql-db:
         container_name: epics-archiver-mysql-db
