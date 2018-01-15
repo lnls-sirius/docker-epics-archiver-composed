@@ -1,0 +1,46 @@
+version: '3.2'
+services:
+    epics-archiver:
+        container_name: epics-archiver
+        image: lnlscon/epics-archiver-single:latest
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        ports:
+            - 11995:11995
+            - 11996:11996
+            - 11997:11997
+            - 11998:11998
+        depends_on:
+            - epics-archiver-mysql-db
+        volumes:
+            - /storage/epics-archiver/epics-archiver-sts:/opt/epics-archiver-appliances/storage/sts
+            - /storage/epics-archiver/epics-archiver-mts:/opt/epics-archiver-appliances/storage/mts
+            - /storage/epics-archiver/epics-archiver-lts:/opt/epics-archiver-appliances/storage/lts
+            - /storage/epics-archiver/configuration:/opt/epics-archiver-appliances/configuration
+        env_file:
+            - /home/srv1/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
+
+    epics-archiver-mysql-db:
+        container_name: epics-archiver-mysql-db
+        image: lnlscon/epics-archiver-mysql-db:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=controle
+            - MYSQL_USER=lnls_user
+            - MYSQL_PASSWORD=controle
+            - MYSQL_DATABASE=lnls_archiver_db
+        networks:
+            - epics-archiver-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        volumes:
+            - /storage/epics-archiver/epics-archiver-db:/var/lib/mysql
+
+networks:
+    epics-archiver-network:
+        ipam:
+            config:
+                - subnet: 192.168.5.0/24
