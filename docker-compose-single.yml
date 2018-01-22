@@ -3,6 +3,7 @@ services:
     epics-archiver:
         container_name: epics-archiver
         image: lnlscon/epics-archiver-single:latest
+        hostname: epics-archiver
         networks:
             epics-archiver-network:
                 ipv4_address: 192.168.5.5
@@ -27,6 +28,7 @@ services:
     epics-archiver-mysql-db:
         container_name: epics-archiver-mysql-db
         image: lnlscon/epics-archiver-mysql-db:latest
+        hostname: epics-archiver-mysql-db
         environment:
             - MYSQL_ROOT_PASSWORD=controle
             - MYSQL_USER=lnls_user

@@ -1,7 +1,7 @@
 version: '3.2'
 services:
     epics-archiver:
-        container_name: epics-archiver
+        hostname: epics-archiver
         image: lnlscon/epics-archiver-single:latest
         networks:
             - epics-archiver-network
@@ -24,7 +24,7 @@ services:
             - /home/srv1/repository/docker-epics-archiver-composed/lnls-epics-archiver.env
 
     epics-archiver-mysql-db:
-        container_name: epics-archiver-mysql-db
+        hostname: epics-archiver-mysql-db
         image: lnlscon/epics-archiver-mysql-db:latest
         environment:
             - MYSQL_ROOT_PASSWORD=controle
