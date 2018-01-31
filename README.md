@@ -9,7 +9,7 @@ Two compose files can be used in order to deploy the service. `docker-compose.ym
 ### Environment file
 
 Define the environment variables in `lnls-epics-archiver.env` to set any EPICS preferences up. `CERTIFICATE_PASSWORD`, `CONNECTION_NAME` and `CONNECTION_PASSWORD` need to be changed to reflect the 
-certificate password and LDAP binding address and password, respectively. Edit `docker-compose.yml` (or `docker-compose-single.yml`) with its right location.
+certificate password and LDAP binding address and password, respectively. Those parameters are used only if `USE_AUTHENTICATION` is set to true. Otherwise, they are ignored. Edit `docker-compose.yml` (or `docker-compose-single.yml`) with its right location.
 
 ### Persistent data folders
 
